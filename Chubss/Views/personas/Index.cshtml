@@ -1,0 +1,214 @@
+﻿@using Chubss
+
+@model List<Chubss.Models.PersonaProducto>
+
+@{
+    ViewData["Title"] = "Persona Page";
+}
+
+<div class="text-center">
+    <input type="hidden" value="" id="txIdentificacion" />
+    <section class="content">
+        <section class="content-header" style="padding-bottom:5px; padding-top:8px">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Personas</li>
+                        </ol>
+                    </div>
+                    <div class="col-sm-6">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container-fluid">
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">Personas</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Tipo Identificion</label>
+                                <select class="form-control js-example-basic-single" id="txtIdEmpresa">
+                                    @foreach (Catalogo item in ViewData["ListaTipoPersona"] as List<Catalogo>)
+                                    {
+                                        <option value="@item.IdTabla">@item.Descripcion</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Identificacion:</label>
+                                <input type="text" class="form-control" id="txtIdentificacion" maxlength="15">
+                                <b id="lbIdentificacion"></b>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Nombre del Cliente:</label>
+                                <input type="text" class="form-control" id="txtNombreComp" maxlength="100" Onkeypress="return validarLetras(event);">
+
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Telefono:</label>
+                                <input type="text" class="form-control" id="txtTelefono" maxlength="10" Onkeypress="return validaNumero(event);">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Edad:</label>
+                                <input type="text" class="form-control" id="txtEdad" maxlength="4" Onkeypress="return validaNumero(event);">
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label>Producto</label>
+                                <select class="form-control js-example-basic-single" id="txtProducto">
+                                    @foreach (Catalogo item in ViewData["ListaProducto"] as List<Catalogo>)
+                                    {
+                                        <option value="@item.IdTabla">@item.Descripcion</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Prima:</label>
+                                <input type="text" class="form-control" id="txtPrima" maxlength="4" Onkeypress="return validaNumero(event);">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="justify-content-center row">
+                        <div class="col-sm-3">
+                            <input type="button" id="btnGrabar" class="btn btn-block btn-primary" onclick="inseratrpersonas()" value="Grabar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="row" id="TblUserPerfil">
+            <div class="row col-lg-12 col-sm-12 col-md-12">
+                <div class="card-body">
+                    <table id="tblPerfiUser" class="table table-bordered table-striped" style="font-size:14px">
+                        <thead>
+                            <tr>
+                                <th>IdPersona</th>
+                                <th>Identificacion</th>
+                                <th>Nombres</th>
+                                <th>Telefono</th>
+                                <th>Eadad</th>
+                                <th>AddProducto</th>
+                                <th>ConslProducto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Persona item in ViewData["ListaPersona"] as List<Persona>)
+                            {
+                                <tr>
+                                    <td>@item.IdPersona</td>
+                                    <td>@item.Identificacion</td>
+                                    <td>@item.NombreCliente</td>
+                                    <td>@item.Telefono</td>
+                                    <td>@item.Edad</td>
+                                    <td>
+                                        <div onclick="MostrarModal('0'+@item.Identificacion)">
+                                            <input id="btnAddProducto" type="image" src="https://static.vecteezy.com/system/resources/previews/000/436/361/non_2x/vector-add-icon.jpg" height="30" width="30" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div onclick="MostrarModalCons('0'+@item.Identificacion)">
+                                            <input id="btnAddProducto" type="image" src="https://previews.123rf.com/images/arhimicrostok/arhimicrostok1708/arhimicrostok170801620/84518343-consultar-la-lista-de-iconos-de-vectores-cesta-de-la-lista-de-s%C3%ADmbolos-estilo-de-dise%C3%B1o-plano-.jpg" height="30" width="30" />
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.col -->
+        </div>
+
+
+        <!--Modal Modificacion-->
+        <div class="modal fade" id="modal-default">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="card modal-body">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Insertar Cliente</h4>
+                            <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row col-lg-12 col-sm-12 col-md-12">
+                                <div class="col-sm-6">
+                                    <!-- text input -->
+                                    <div class="form-group">
+                                        <label>Producto</label>
+                                        <select class="form-control js-example-basic-single" id="txtProductoModal">
+                                            @foreach (Catalogo item in ViewData["ListaProducto"] as List<Catalogo>)
+                                            {
+                                                <option value="@item.IdTabla">@item.Descripcion</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Prima:</label>
+                                        <input type="text" class="form-control" id="txtPrimaModal" maxlength="4" Onkeypress="return validaNumero(event);">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between row">
+                            <div class="row col-lg-12 col-sm-12 col-md-12">
+                                <input value="Guardar" type="button" class="btn btn-outline-success" onclick="inseratrProductoModal()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="ModalProductoCons">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="card modal-body">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Insertar Cliente</h4>
+                            <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div id="ModalConsltProducto">
+
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<script>
+   
+</script>
