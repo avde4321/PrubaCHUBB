@@ -102,6 +102,21 @@ namespace Chubss.Services
             }
         }
 
+        public async Task<bool> ValidaExistPerson(string identificacion)
+        {
+            try
+            {
+                bool valPerson = _context.Personas.Count(x => x.Identificacion == identificacion) > 0 ? false: true ;
+
+                return valPerson;
+            }
+            catch (Exception es)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<dynamic> Producto()
         {
             try

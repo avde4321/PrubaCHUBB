@@ -85,18 +85,28 @@ namespace Chubss.Controllers
         {
             var res = string.Empty;
             var valida = string.Empty;
+            bool ExistePerd = false;
             var identificacion = persona.Identificacion;
             try
             {
                 valida = ValidaCamp(persona, producto);
+                ExistePerd = ValidaExistePer(identificacion).GetAwaiter().GetResult();
                 if (valida == "OK")
                 {
-                    res = await _personaInterface.InsetarPersona(persona);
+                    if (ExistePerd.Equals(true))
+                    {
+                        res = await _personaInterface.InsetarPersona(persona);
 
-                    if (res == "OK")
-                        res = await _personaInterface.InsertarProducto(producto, identificacion);
+                        if (res == "OK")
+                            res = await _personaInterface.InsertarProducto(producto, identificacion);
 
-                    return base.Json("Persona y producto registrado correctamente");
+                        return base.Json("Persona y producto registrado correctamente");
+                    }
+                    else
+                    {
+                        return base.Json("La personas con Identificacion: "+ identificacion+" ya se encuentra registrada");
+                    }
+                    
                 }
                 else
                 {
@@ -136,6 +146,21 @@ namespace Chubss.Controllers
                 listProducto = await _personaInterface.CansultProduct(Ident);
 
                 return PartialView("ConstProduct", listProducto);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> ValidaExistePer(string Ident)
+        {
+            bool res = false;
+            try
+            {
+                res = await _personaInterface.ValidaExistPerson(Ident);
+                return res;
             }
             catch (Exception ex)
             {

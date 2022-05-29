@@ -86,6 +86,7 @@ function inseratrpersonas() {
         },
         success: function (data) {
             alert(data);
+            window.location.reload(true);
         },
         error: function (data) {
             alert(data);
@@ -122,6 +123,7 @@ function inseratrProductoModal() {
         },
         success: function (data) {
             alert(data);
+            window.location.reload(true);
         },
         error: function (data) {
             alert(data);
