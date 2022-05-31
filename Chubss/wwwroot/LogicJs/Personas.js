@@ -51,6 +51,16 @@ function MostrarModalCons(identi) {
     $('#ModalProductoCons').modal('show');
 }
 
+function MostrarModalEdit(idPersona, ident, nombre, telefono, edad) {
+    $('#txtIdPersonaModal').val(idPersona);
+    $('#txtIdentificacionModal').val(ident);
+    $('#txtNombreCompModal').val(nombre);
+    $('#txtTelefonoModal').val(telefono);
+    $('#txtEdadModal').val(edad);
+
+    $('#ModalEditarPerson').modal('show');
+}
+
 function inseratrpersonas() {
 
     var now = new Date();
@@ -61,7 +71,7 @@ function inseratrpersonas() {
     var producto = {
         IdPersonaProducto: 0,
         IdPersona: 0,
-        IdCatalagoProducto: $('#txtProducto').val(),
+        IdProducto: $('#txtProducto').val(),
         Prima: $('#txtPrima').val(),
         Fecha: fecha,
         Estado: 'A',
@@ -107,7 +117,7 @@ function inseratrProductoModal() {
     var producto = {
         IdPersonaProducto: 0,
         IdPersona: 0,
-        IdCatalagoProducto: $('#txtProductoModal').val(),
+        IdProducto: $('#txtProductoModal').val(),
         Prima: $('#txtPrimaModal').val(),
         Fecha: fecha,
         Estado: 'A',
@@ -151,3 +161,65 @@ function ConsultaProcto() {
         }
     });
 }
+
+function ConsultaPersona() {
+
+    var ident = $('#TxBuscaPersona').val()
+
+    $.ajax({
+        url: urlBase + '/personas/ConsulPersona/',
+        type: 'GET',
+        dataType: "html",
+        async: false,
+        data: {
+            identificacion: ident
+        },
+        success: function (data) {
+            $('#TblPartPerson').html(data);
+        },
+        error: function (data) {
+
+        }
+    });
+}
+
+
+function EditaPersona() {
+
+    var Persona = {
+        IdPersona: $('#txtIdPersonaModal').val(),
+        Identificacion: $('#txtIdentificacionModal').val(),
+        NombreCliente: $('#txtNombreCompModal').val(),
+        Telefono: $('#txtTelefonoModal').val(),
+        Edad: $('#txtEdadModal').val(),
+        Fecha: null,
+        Estado: $('#txtEstadoModal').val()
+    };
+
+    $.ajax({
+        url: urlBase + '/personas/EditPerson/',
+        type: 'PUT',
+        dataType: "json",
+        async: false,
+        data: {
+            Persona
+        },
+        success: function (data) {
+            alert(data);
+            window.location.reload(true);
+        },
+        error: function (data) {
+            alert(data);
+        }
+    });
+}
+
+$('#TxBuscaPersona').on('change',function (e) {
+    if ($('#TxBuscaPersona').val().length == 0||$('#TxBuscaPersona').val().length == 10 || $('#TxBuscaPersona').val().length == 13 || $('#TxBuscaPersona').val().length == 15) {
+        ConsultaPersona()
+    }
+})
+
+$(document).ready(function () {
+    ConsultaPersona();
+});

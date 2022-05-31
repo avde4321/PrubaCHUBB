@@ -30,6 +30,7 @@ namespace Chubss
             services.AddDbContext<dbpruebaschubbContext>(Options => Options.UseSqlServer(Configuration.GetConnectionString("Conexion")));
 
             services.AddScoped<PersonaInterface, PersonaService>();
+            services.AddScoped<ProductoInterface, ProductoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

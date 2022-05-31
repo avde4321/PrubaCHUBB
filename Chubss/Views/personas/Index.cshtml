@@ -12,13 +12,11 @@
         <section class="content-header" style="padding-bottom:5px; padding-top:8px">
             <div class="container-fluid">
                 <div class="row mb-2">
-                    <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-12">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">CHUBB</a></li>
                             <li class="breadcrumb-item active">Personas</li>
                         </ol>
-                    </div>
-                    <div class="col-sm-6">
                     </div>
                 </div>
             </div>
@@ -75,9 +73,9 @@
                             <div class="form-group">
                                 <label>Producto</label>
                                 <select class="form-control js-example-basic-single" id="txtProducto">
-                                    @foreach (Catalogo item in ViewData["ListaProducto"] as List<Catalogo>)
+                                    @foreach (Producto item in ViewData["ListaProducto"] as List<Producto>)
                                     {
-                                        <option value="@item.IdTabla">@item.Descripcion</option>
+                                        <option value="@item.CodProducto">@item.Descripcion</option>
                                     }
                                 </select>
                             </div>
@@ -85,7 +83,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Prima:</label>
-                                <input type="text" class="form-control" id="txtPrima" maxlength="10" Onkeypress="return validaNumero(event);">
+                                <input type="text" class="form-control" id="txtPrima" maxlength="10" Onkeypress="return validaNumero(event);" />
                             </div>
                         </div>
                     </div>
@@ -96,119 +94,152 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section class="content">
-        <div class="row" id="TblUserPerfil">
-            <div class="row col-lg-12 col-sm-12 col-md-12">
+            <br>
+
+            <div class="card card-success">
                 <div class="card-body">
-                    <table id="tblPerfiUser" class="table table-bordered table-striped" style="font-size:14px">
-                        <thead>
-                            <tr>
-                                <th>IdPersona</th>
-                                <th>Identificacion</th>
-                                <th>Nombres</th>
-                                <th>Telefono</th>
-                                <th>Edad</th>
-                                <th>AddProducto</th>
-                                <th>ConslProducto</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (Persona item in ViewData["ListaPersona"] as List<Persona>)
-                            {
-                                <tr>
-                                    <td>@item.IdPersona</td>
-                                    <td>@item.Identificacion</td>
-                                    <td>@item.NombreCliente</td>
-                                    <td>@item.Telefono</td>
-                                    <td>@item.Edad</td>
-                                    <td>
-                                        <div onclick="MostrarModal('0'+@item.Identificacion)">
-                                            <input id="btnAddProducto" type="image" src="https://static.vecteezy.com/system/resources/previews/000/436/361/non_2x/vector-add-icon.jpg" height="30" width="30" />
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div onclick="MostrarModalCons('0'+@item.Identificacion)">
-                                            <input id="btnAddProducto" type="image" src="https://previews.123rf.com/images/arhimicrostok/arhimicrostok1708/arhimicrostok170801620/84518343-consultar-la-lista-de-iconos-de-vectores-cesta-de-la-lista-de-s%C3%ADmbolos-estilo-de-dise%C3%B1o-plano-.jpg" height="30" width="30" />
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    <div class="row col-lg-3 col-sm-3 col-md-3">
+                        <input type="text" id="TxBuscaPersona" class="form-control" maxlength="15" placeholder="Filtra Identificacion" />
+                    </div>
+                    <div id="TblPartPerson">
+
+                    </div>
                 </div>
-                <!-- /.card-body -->
             </div>
-            <!-- /.card -->
-            <!-- /.col -->
-        </div>
 
-
-        <!--Modal Modificacion-->
-        <div class="modal fade" id="modal-default">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="card modal-body">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Insertar Producto</h4>
-                            <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row col-lg-12 col-sm-12 col-md-12">
-                                <div class="col-sm-6">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Producto</label>
-                                        <select class="form-control js-example-basic-single" id="txtProductoModal">
-                                            @foreach (Catalogo item in ViewData["ListaProducto"] as List<Catalogo>)
-                                            {
-                                                <option value="@item.IdTabla">@item.Descripcion</option>
-                                            }
-                                        </select>
+            <!--Modal Modificacion-->
+            <div class="modal fade" id="modal-default">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="card modal-body">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Insertar Producto</h4>
+                                <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row col-lg-12 col-sm-12 col-md-12">
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label>Producto</label>
+                                            <select class="form-control js-example-basic-single" id="txtProductoModal">
+                                                @foreach (Producto item in ViewData["ListaProducto"] as List<Producto>)
+                                                {
+                                                    <option value="@item.CodProducto">@item.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Prima:</label>
-                                        <input type="text" class="form-control" id="txtPrimaModal" maxlength="4" Onkeypress="return validaNumero(event);">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>Prima:</label>
+                                            <input type="text" class="form-control" id="txtPrimaModal" maxlength="10" Onkeypress="return validaNumero(event);">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer justify-content-between row">
-                            <div class="row col-lg-12 col-sm-12 col-md-12">
-                                <input value="Guardar" type="button" class="btn btn-outline-success" onclick="inseratrProductoModal()" />
+                            <div class="modal-footer justify-content-between row">
+                                <div class="row col-lg-12 col-sm-12 col-md-12">
+                                    <input value="Guardar" type="button" class="btn btn-outline-success" onclick="inseratrProductoModal()" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="ModalProductoCons">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="card modal-body">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Consultar Producto</h4>
-                            <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+            <div class="modal fade" id="ModalProductoCons">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="card modal-body">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Consultar Producto</h4>
+                                <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div id="ModalConsltProducto">
+
+                            </div>
                         </div>
-                        <div id="ModalConsltProducto">
-
-                        </div>                        
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="ModalEditarPerson">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="card modal-body">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edita Persona</h4>
+                                <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row col-lg-12 col-sm-12 col-md-12">
+                                    <div class="row">
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>IdPersona:</label>
+                                                <input type="text" class="form-control" id="txtIdPersonaModal" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>Identificacion:</label>
+                                                <input type="text" class="form-control" id="txtIdentificacionModal" maxlength="15" />
+                                                <b id="lbIdentificacion"></b>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>Nombre del Cliente:</label>
+                                                <input type="text" class="form-control" id="txtNombreCompModal" maxlength="100" Onkeypress="return validarLetras(event);" />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>Telefono:</label>
+                                                <input type="text" class="form-control" id="txtTelefonoModal" maxlength="10" Onkeypress="return validaNumero(event);" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>Edad:</label>
+                                                <input type="text" class="form-control" id="txtEdadModal" maxlength="10" Onkeypress="return validaNumero(event);" />
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <label>Producto</label>
+                                                <select class="form-control js-example-basic-single" id="txtEstadoModal">
+                                                    <option value="A">Activo</option>
+                                                    <option value="I">Inactivo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between row">
+                                <div class="row col-lg-12 col-sm-12 col-md-12">
+                                    <input value="Actualizar" type="button" class="btn btn-outline-success" onclick="EditaPersona()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
 </div>
 <script>
-   
+
 </script>

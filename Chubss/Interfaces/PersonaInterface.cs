@@ -11,9 +11,10 @@ namespace Chubss.Interfaces
         Task<string> InsetarPersona(Persona perProducto);
         Task<string> InsertarProducto(PersonaProducto producto, string identificacion);
         Task<dynamic> CansultProduct(string identificacion);
-        Task<dynamic> ConsulPersona();
+        Task<dynamic> ConsulPersona(string identificacion);
         Task<bool> ValidaExistPerson(string identificacion);
         Task<dynamic> TipoPersonas();
         Task<dynamic> Producto();
+        Task<string> EditaPersona(Persona editperson);
     }
 }

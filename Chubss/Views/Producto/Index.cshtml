@@ -1,0 +1,101 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="text-center">
+    <section class="content">
+        <section class="content-header" style="padding-bottom:5px; padding-top:8px">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-lg-12 col-sm-12 col-md-12">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">CHUBB</a></li>
+                            <li class="breadcrumb-item active">Producto</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <div class="container-fluid">
+        <div class="card card-success">
+            <div class="card-header">
+                <h3 class="card-title">Productos</h3>
+            </div>
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div class="card-body">
+                    <div class="row col-lg-3 col-sm-3 col-md-3">
+                        <div onclick="ModalInsertProducto()">
+                            <input id="btnInsertProducto" type="image" src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" height="30" width="30" />
+                        </div>                        
+                        <input type="text" id="TxBuscaproducto" class="form-control" maxlength="15" placeholder="Filtra CodProducto" />
+                    </div>
+                    <div id="TblPartProduc">
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ModalEditarProducto">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="card modal-body">
+                    <div class="modal-header">
+                        <h4 class="modal-title" hidden id="TitulEdit">Edita Persona</h4>
+                        <h4 class="modal-title" hidden id="TitulInsert">Insertar Persona</h4>
+                        <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row col-lg-12 col-sm-12 col-md-12">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>IdProducto:</label>
+                                        <input type="text" class="form-control" id="txtIdProductoModal" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Cod producto:</label>
+                                        <input type="text" class="form-control" id="txtCodProductoModal" maxlength="15" />
+                                        <b id="lbIdentificacion"></b>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Descripcion:</label>
+                                        <input type="text" class="form-control" id="txtDescripcionModal" maxlength="100" Onkeypress="return validarLetras(event);" />
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Producto</label>
+                                        <select class="form-control js-example-basic-single" id="txtEstadoModal">
+                                            <option value="A">Activo</option>
+                                            <option value="I">Inactivo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between row">
+                        <div class="row col-lg-12 col-sm-12 col-md-12">
+                            <input value="Actualizar" id="BtnInsertarModal" type="button" class="btn btn-outline-success" onclick="EditaProducto()" hidden/>
+                            <input value="Actualizar" id="BtnEditaModal" type="button" class="btn btn-outline-success" onclick="EditaProducto()" hidden/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

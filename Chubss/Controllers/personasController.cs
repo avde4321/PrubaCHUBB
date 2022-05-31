@@ -21,15 +21,12 @@ namespace Chubss.Controllers
         public IActionResult Index()
         {
             List<Catalogo> listTipoPersona = new List<Catalogo>();
-            List<Catalogo> ListaProducto = new List<Catalogo>();
-            List<Persona> listPersonas = new List<Persona>();
+            List<Producto> ListaProducto = new List<Producto>();
             listTipoPersona = TipoPersona().GetAwaiter().GetResult();
             ListaProducto = Producto().GetAwaiter().GetResult();
-            listPersonas = ConsulPersona().GetAwaiter().GetResult();
 
             ViewData["ListaTipoPersona"] = listTipoPersona;
             ViewData["ListaProducto"] = ListaProducto;
-            ViewData["ListaPersona"] = listPersonas;
             return View();
         }
 
@@ -50,13 +47,13 @@ namespace Chubss.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Catalogo>> Producto()
+        public async Task<List<Producto>> Producto()
         {
-            List<Catalogo> lisCatalogo = new List<Catalogo>();
+            List<Producto> lisProducto = new List<Producto>();
             try
             {
-                lisCatalogo = await _personaInterface.Producto();
-                return lisCatalogo;
+                lisProducto = await _personaInterface.Producto();
+                return lisProducto;
             }
             catch (Exception ex)
             {
@@ -65,13 +62,13 @@ namespace Chubss.Controllers
             }
         }
         [HttpGet]
-        public async Task<List<Persona>> ConsulPersona()
+        public async Task<IActionResult> ConsulPersona(string identificacion)
         {
             List<Persona> listPersona = new List<Persona>();
             try
             {
-                listPersona = await _personaInterface.ConsulPersona();
-                return listPersona;
+                listPersona = await _personaInterface.ConsulPersona(identificacion);
+                return PartialView("ConsulPersona", listPersona);
             }
             catch (Exception ex)
             {
@@ -128,8 +125,8 @@ namespace Chubss.Controllers
             try
             {
                 res = await _personaInterface.InsertarProducto(producto, identificacion);
-
-                return base.Json("Persona y producto registrado correctamente");
+                
+                return base.Json(res);
             }
             catch (Exception ex)
             {
@@ -140,12 +137,29 @@ namespace Chubss.Controllers
         [HttpGet]
         public async Task<IActionResult> ConstProducto(string Ident)
         {
-            List<PersonaProducto> listProducto = new List<PersonaProducto>();
+            List<ConsultaProduc> listProducto = new List<ConsultaProduc>();
             try
             {
                 listProducto = await _personaInterface.CansultProduct(Ident);
 
                 return PartialView("ConstProduct", listProducto);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> EditPerson(Persona persona)
+        {
+            var res = string.Empty;
+            try
+            {
+                res = await _personaInterface.EditaPersona(persona);
+
+                return base.Json(res);
             }
             catch (Exception ex)
             {

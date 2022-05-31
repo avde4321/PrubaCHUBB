@@ -1,0 +1,57 @@
+﻿@model List<Chubss.Models.Persona>
+
+
+<table id="tblPersonas" class="table table-bordered table-striped" style="font-size:14px">
+    <thead>
+        <tr>
+            <th>IdPersona</th>
+            <th>Identificacion</th>
+            <th>Nombres</th>
+            <th>Telefono</th>
+            <th>Edad</th>
+            <th>AddProducto</th>
+            <th>ConslProducto</th>
+            <th>Editar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.IdPersona</td>
+                <td>@item.Identificacion</td>
+                <td>@item.NombreCliente</td>
+                <td>@item.Telefono</td>
+                <td>@item.Edad</td>
+                <td>
+                    <div onclick="MostrarModal('@item.Identificacion')">
+                        <input id="btnAddProducto" type="image" src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" height="30" width="30" />
+                    </div>
+                </td>
+                <td>
+                    <div onclick="MostrarModalCons('@item.Identificacion')">
+                        <input id="btnAddProducto" type="image" src="https://cdn-icons-png.flaticon.com/512/751/751381.png" height="30" width="30" />
+                    </div>
+                </td>
+                <td>
+                    <div onclick="MostrarModalEdit('@item.IdPersona','@item.Identificacion','@item.NombreCliente','@item.Telefono','@item.Edad')">
+                        <input id="btnAddProducto" type="image" src="https://cdn-icons-png.flaticon.com/512/1160/1160515.png" height="30" width="30" />
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $('#tblPersonas').DataTable({
+        "paging": true,
+        "searching": true,
+        "ordering": true,
+        "autoWidth": false,
+        "pageLength": 10,
+        "responsive": true,
+        "language": {
+            url: "../Content/idioma/espaniol.json"
+        },
+    });
+</script>

@@ -20,6 +20,7 @@ namespace Chubss.Models
         public virtual DbSet<Catalogo> Catalogos { get; set; }
         public virtual DbSet<Persona> Personas { get; set; }
         public virtual DbSet<PersonaProducto> PersonaProductos { get; set; }
+        public virtual DbSet<Producto> Productos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -97,7 +98,9 @@ namespace Chubss.Models
                     .IsUnicode(false)
                     .HasColumnName("Nombre_cliente");
 
-                entity.Property(e => e.Telefono).HasColumnType("numeric(10, 0)");
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<PersonaProducto>(entity =>
@@ -118,15 +121,45 @@ namespace Chubss.Models
 
                 entity.Property(e => e.Fecha).HasColumnType("date");
 
-                entity.Property(e => e.IdCatalagoProducto)
-                    .HasColumnType("numeric(18, 0)")
-                    .HasColumnName("id_Catalago_Producto");
-
                 entity.Property(e => e.IdPersona)
                     .HasColumnType("numeric(18, 0)")
                     .HasColumnName("id_Persona");
 
+                entity.Property(e => e.IdProducto)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("id_Producto");
+
                 entity.Property(e => e.Prima).HasColumnType("numeric(18, 0)");
+            });
+
+            modelBuilder.Entity<Producto>(entity =>
+            {
+                entity.HasKey(e => e.IdProducto)
+                    .HasName("PK__Producto__2085A9CFFC9DAF37");
+
+                entity.ToTable("Producto");
+
+                entity.Property(e => e.IdProducto)
+                    .HasColumnType("numeric(18, 0)")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("Id_Producto");
+
+                entity.Property(e => e.CodProducto)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("Cod_Producto");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+
+                entity.Property(e => e.Estado)
+                    .HasMaxLength(3)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Fecha).HasColumnType("date");
             });
 
             OnModelCreatingPartial(modelBuilder);

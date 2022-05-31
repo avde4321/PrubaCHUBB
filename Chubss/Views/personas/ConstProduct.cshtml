@@ -1,5 +1,5 @@
 ﻿
-@model List<Chubss.Models.PersonaProducto>
+@model List<Chubss.Models.ConsultaProduc>
 
     <div class="modal-body">
         <div class="row col-lg-12 col-sm-12 col-md-12">
@@ -17,13 +17,12 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td>@item.IdCatalagoProducto</td>
+                                    <td>@item.Descripcion</td>
                                     <td>@item.Prima</td>
 
                                 </tr>
                             }
                         }
-
                     </tbody>
                 </table>
             </div>
