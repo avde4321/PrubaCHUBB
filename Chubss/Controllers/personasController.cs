@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LinqToExcel;
+using SpreadsheetLight;
+using System.IO;
 
 namespace Chubss.Controllers
 {
@@ -83,8 +84,14 @@ namespace Chubss.Controllers
             var valida = string.Empty;
             bool ExistePerd = false;
             var identificacion = persona.Identificacion;
+            DateTime date = DateTime.Now;
             try
             {
+                persona.Fecha = persona.Fecha == null ? date: persona.Fecha;
+                persona.Estado = persona.Estado == null ? "A": persona.Estado;
+                producto.Fecha = producto.Fecha == null ? date : producto.Fecha;
+                producto.Estado = producto.Estado == null ? "A" : producto.Estado;
+
                 valida = ValidaCamp(persona, producto);
                 ExistePerd = ValidaExistePer(identificacion).GetAwaiter().GetResult();
                 if (valida == "OK")
@@ -171,10 +178,11 @@ namespace Chubss.Controllers
         public async Task<IActionResult> InsertToEcxel(string excel)
         {
             var Path = excel;
+            var res = string.Empty;
             try
             {
-
-                return Ok("");
+                res = Excel(excel);
+                return base.Json(res);
             }
             catch (Exception ex)
             {
@@ -183,6 +191,53 @@ namespace Chubss.Controllers
             }
         }
 
+        public string Excel(string namedocument)
+        {
+            var excelRes = string.Empty;
+            var pathExcel = string.Empty;
+            var docuemnto = string.Empty;
+            var cont = 2;
+            try
+            {
+                pathExcel = "C:\\ChubbExcel";
+                docuemnto = pathExcel +"\\"+ namedocument;
+                SLDocument sl = new SLDocument(docuemnto);
+                if (Directory.Exists(pathExcel))
+                {
+                    while (!string.IsNullOrEmpty(sl.GetCellValueAsString(cont, 1)))
+                    {
+                        Persona per = new Persona()
+                        {
+                            Identificacion = sl.GetCellValueAsString(cont, 1),
+                            NombreCliente = sl.GetCellValueAsString(cont, 2),
+                            Edad = sl.GetCellValueAsString(cont, 3),
+                            Telefono = sl.GetCellValueAsString(cont, 4)
+                        };
+                        PersonaProducto perpro = new PersonaProducto()
+                        {
+                            IdProducto = sl.GetCellValueAsString(cont, 5),
+                            Prima = sl.GetCellValueAsDecimal(cont, 6)
+
+                        };
+
+                        Insertar(per, perpro).GetAwaiter().GetResult();
+
+                        cont++;
+                    }
+                }
+                else
+                {
+                    Directory.CreateDirectory(pathExcel);
+                }
+                
+
+                return "El Excel se guardo exitosamente";
+            }
+            catch (Exception ex)
+            {
+                return "Se presento una novedad al guardar";
+            }
+        }
         public async Task<bool> ValidaExistePer(string Ident)
         {
             bool res = false;

@@ -1,0 +1,6 @@
+
+Para poder utilizar la funcion de Cargar Excel se tiene que seguir losmsiguientes pasos
+
+1.- pegar en el dusco "C" la Carpeta (ChubbExcel) en el va encontrar un documento xlsx con la estructura para ser cargado.
+2.- desde el modal en la pantalla personas en el explorador de documentos que se habre Cargar el Excel desde la carpeta (ChubbExcel) 
+previamente creada en el dico local "C"

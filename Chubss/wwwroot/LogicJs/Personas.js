@@ -219,8 +219,7 @@ function EditaPersona() {
 }
 
 function InserExcel() {
-    var rutExcel = $('#exampleInputFileExcel').val();
-    rutExcel = (window.URL || window.webkitURL).createObjectURL($('#exampleInputFileExcel')[0].files[0]);
+    var rutExcel = $('#exampleInputFileExcel')[0].files[0].name;
 
     $.ajax({
         url: urlBase + '/personas/InsertToEcxel/',
@@ -232,7 +231,6 @@ function InserExcel() {
         },
         success: function (data) {
             alert(data);
-            window.location.reload(true);
         },
         error: function (data) {
             alert(data);
