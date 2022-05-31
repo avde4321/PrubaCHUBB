@@ -91,6 +91,9 @@
                         <div class="col-sm-3">
                             <input type="button" id="btnGrabar" class="btn btn-block btn-primary" onclick="inseratrpersonas()" value="Grabar" />
                         </div>
+                        <div class="col-sm-3">
+                            <input type="button" id="btnCergarExcel" class="btn btn-block btn-primary" onclick="MostralModalExcel()" value="CargarExel" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -229,6 +232,41 @@
                             <div class="modal-footer justify-content-between row">
                                 <div class="row col-lg-12 col-sm-12 col-md-12">
                                     <input value="Actualizar" type="button" class="btn btn-outline-success" onclick="EditaPersona()" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="ModalinsertExcel">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="card modal-body">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edita Persona</h4>
+                                <button type="button" class="close" data-dismiss="modal" onclick="window.location.reload(true)" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row col-lg-12 col-sm-12 col-md-12">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">Seleccionar Excel:</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-labe" multiple id="exampleInputFileExcel">
+                                                    <label class="fa fa-file-archive-o" for="exampleInputFile"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between row">
+                                <div class="row col-lg-12 col-sm-12 col-md-12">
+                                    <input value="Actualizar" type="button" class="btn btn-outline-success" onclick="InserExcel()" />
                                 </div>
                             </div>
                         </div>

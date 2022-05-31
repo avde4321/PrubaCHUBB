@@ -135,9 +135,11 @@ namespace Chubss.Services
 
         public async Task<bool> ValidaExistPerson(string identificacion)
         {
+            identificacion = identificacion.Substring(0, 10);
+
             try
             {
-                bool valPerson = _context.Personas.Count(x => x.Identificacion == identificacion) > 0 ? false: true ;
+                bool valPerson = _context.Personas.Count(x => x.Identificacion.Contains(identificacion)) > 0 ? false: true ;
 
                 return valPerson;
             }

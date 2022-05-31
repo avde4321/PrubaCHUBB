@@ -1,11 +1,10 @@
 ﻿using Chubss.Interfaces;
 using Chubss.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using LinqToExcel;
 
 namespace Chubss.Controllers
 {
@@ -101,7 +100,7 @@ namespace Chubss.Controllers
                     }
                     else
                     {
-                        return base.Json("La personas con Identificacion: "+ identificacion+" ya se encuentra registrada");
+                        return base.Json("La personas con Identificacion: "+ identificacion+" ya se encuentra registrada con Cedula o Ruc");
                     }
                     
                 }
@@ -160,6 +159,22 @@ namespace Chubss.Controllers
                 res = await _personaInterface.EditaPersona(persona);
 
                 return base.Json(res);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> InsertToEcxel(string excel)
+        {
+            var Path = excel;
+            try
+            {
+
+                return Ok("");
             }
             catch (Exception ex)
             {

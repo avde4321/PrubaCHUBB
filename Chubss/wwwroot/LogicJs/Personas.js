@@ -61,6 +61,10 @@ function MostrarModalEdit(idPersona, ident, nombre, telefono, edad) {
     $('#ModalEditarPerson').modal('show');
 }
 
+function MostralModalExcel() {
+    $('#ModalinsertExcel').modal('show');
+}
+
 function inseratrpersonas() {
 
     var now = new Date();
@@ -214,9 +218,48 @@ function EditaPersona() {
     });
 }
 
+function InserExcel() {
+    var rutExcel = $('#exampleInputFileExcel').val();
+    rutExcel = (window.URL || window.webkitURL).createObjectURL($('#exampleInputFileExcel')[0].files[0]);
+
+    $.ajax({
+        url: urlBase + '/personas/InsertToEcxel/',
+        type: 'POST',
+        dataType: "json",
+        async: false,
+        data: {
+            excel: rutExcel
+        },
+        success: function (data) {
+            alert(data);
+            window.location.reload(true);
+        },
+        error: function (data) {
+            alert(data);
+        }
+    });
+}
+
 $('#TxBuscaPersona').on('change',function (e) {
     if ($('#TxBuscaPersona').val().length == 0||$('#TxBuscaPersona').val().length == 10 || $('#TxBuscaPersona').val().length == 13 || $('#TxBuscaPersona').val().length == 15) {
         ConsultaPersona()
+    }
+})
+
+$('#txtIdentificacion').on('change', function (e) {
+
+    if ($('#txtIdentificacion').val().length > 10)
+    {
+        if ($('#txtIdentificacion').val().length == 10) {
+            $('#txtIdEmpresa').val(1);
+        }
+        else if ($('#txtIdentificacion').val().length == 13) {
+            $('#txtIdEmpresa').val(2);
+        }
+        else if ($('#txtIdentificacion').val().length > 13) {
+            $('#txtIdEmpresa').val(3);
+        }
+        
     }
 })
 
