@@ -47,7 +47,7 @@ function EditaProducto() {
     });
 }
 
-function EditaProducto() {
+function InsertarProducto() {
 
     var now = new Date();
     var month = now.getMonth() + 1;
